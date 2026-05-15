@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Smart Watch Component Hub | Tech Specs & Explorer</title>
+    <!-- Google Fonts & Font Awesome Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f5f7fc;
+            color: #1a2634;
+            line-height: 1.4;
+            scroll-behavior: smooth;
+        }
+
+        /* Dark / glassmorphic header */
+        .hero {
+            background: linear-gradient(135deg, #0b1a2e 0%, #0f212f 100%);
+            color: white;
+            padding: 2.5rem 2rem 3rem 2rem;
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        .hero h1 {
+            font-size: 2.6rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .hero h1 i {
+            background: #2d86e6;
+            padding: 8px;
+            border-radius: 30px;
+            font-size: 1.8rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            opacity: 0.85;
+            max-width: 680px;
+            margin: 0.75rem auto 0;
+        }
+
+        .stats-badge {
+            display: inline-block;
+            background: rgba(45,134,230,0.2);
+            backdrop-filter: blur(4px);
+            padding: 0.4rem 1rem;
+            border-radius: 60px;
+            font-size: 0.85rem;
+            margin-top: 1rem;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        /* main container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        /* filters / search bar */
+        .toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            background: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 60px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03), 0 1px 2px rgba(0,0,0,0.05);
+        }
+
+        .search-box {
+            flex: 2;
+            min-width: 200px;
+            display: flex;
+            align-items: center;
+            background: #f0f2f6;
+            border-radius: 40px;
+            padding: 0.4rem 1rem;
+        }
+
+        .search-box i {
+            color: #6c7a8a;
+            margin-right: 10px;
+        }
+
+        .search-box input {
+            border: none;
+            background: transparent;
+            padding: 12px 0;
+            width: 100%;
+            font-size: 0.95rem;
+            outline: none;
+            font-weight: 500;
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .filter-chip {
+            background: #f0f2f6;
+            padding: 8px 20px;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #2c3e4e;
+        }
+
+        .filter-chip.active {
+            background: #1e6dc7;
+            color: white;
+            box-shadow: 0 4px 8px rgba(30,109,199,0.2);
+        }
+
+        .filter-chip i {
+            font-size: 0.9rem;
+        }
+
+        /* component grid */
+        .components-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.8rem;
+            margin-top: 0.5rem;
+        }
+
+        /* card */
+        .component-card {
+            background: white;
+            border-radius: 2rem;
+            overflow: hidden;
+            transition: transform 0.2s ease, box-shadow 0.2s;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.03), 0 2px 6px rgba(0,0,0,0.05);
+            border: 1px solid #e9edf2;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .component-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 30px -12px rgba(0,0,0,0.1);
+            border-color: #cddae9;
+        }
+
+        .card-header {
+            padding: 1.2rem 1.5rem 0.5rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #eff3f8;
+        }
+
+        .component-icon {
+            font-size: 2.2rem;
+            color: #1e6dc7;
+        }
+
+        .component-category {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            background: #eef2ff;
+            padding: 4px 12px;
+            border-radius: 30px;
+            color: #1e6dc7;
+            letter-spacing: 0.3px;
+        }
+
+        .card-body {
+            padding: 1.2rem 1.5rem;
+            flex: 1;
+        }
+
+        .component-name {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 0.6rem;
+            letter-spacing: -0.3px;
+        }
+
+        .component-desc {
+            color: #4a5a6e;
+            font-size: 0.9rem;
+            line-height: 1.45;
+            margin: 0.5rem 0 0.8rem 0;
+        }
+
+        .specs-list {
+            background: #f8fafd;
+            padding: 0.8rem 1rem;
+            border-radius: 18px;
+            margin: 0.75rem 0;
+            font-size: 0.8rem;
+        }
+
+        .specs-list p {
+            margin: 6px 0;
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .spec-label {
+            font-weight: 700;
+            color: #1e2f3d;
+            min-width: 85px;
+        }
+
+        .spec-value {
+            color: #2c6e9e;
+            font-family: monospace;
+            font-weight: 500;
+        }
+
+        .tech-tag {
+            display: inline-block;
+            background: white;
+            border: 1px solid #dce3ec;
+            border-radius: 20px;
+            padding: 4px 12px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #2b4f6c;
+            margin-right: 6px;
+            margin-top: 6px;
+        }
+
+        .card-footer {
+            padding: 0.8rem 1.5rem 1.2rem 1.5rem;
+            border-top: 1px solid #edf2f7;
+            font-size: 0.7rem;
+            color: #6c7f8f;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .badge {
+            background: #eef2fa;
+            border-radius: 20px;
+            padding: 3px 10px;
+        }
+
+        /* footer */
+        .footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding: 2rem;
+            background: #ffffffd0;
+            border-top: 1px solid #e2e8f0;
+            color: #5a6e7c;
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 680px) {
+            .hero h1 { font-size: 1.8rem; }
+            .toolbar { flex-direction: column; align-items: stretch; border-radius: 28px; }
+            .components-grid { grid-template-columns: 1fr; }
+            .card-header { flex-wrap: wrap; gap: 6px; }
+        }
+
+        .empty-msg {
+            text-align: center;
+            grid-column: 1 / -1;
+            padding: 3rem;
+            background: #ffffffc9;
+            border-radius: 48px;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+
+<div class="hero">
+    <h1>
+        <i class="fas fa-microchip"></i> 
+        Smart Watch Component Atlas
+    </h1>
+    <p>Deep dive into processors, sensors, displays, connectivity & power — everything inside modern wearables.</p>
+    <div class="stats-badge">
+        <i class="fas fa-database"></i> 12 core components | 5 categories | pro-specs
+    </div>
+</div>
+
+<div class="container">
+    <div class="toolbar">
+        <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="searchInput" placeholder="Search by name, spec, or feature... (e.g., ECG, AMOLED, GPS)">
+        </div>
+        <div class="filter-group" id="filterGroup">
+            <div class="filter-chip active" data-filter="all"><i class="fas fa-layer-group"></i> All</div>
+            <div class="filter-chip" data-filter="core"><i class="fas fa-microchip"></i> Core & Memory</div>
+            <div class="filter-chip" data-filter="display"><i class="fas fa-mobile-alt"></i> Display & Input</div>
+            <div class="filter-chip" data-filter="sensors"><i class="fas fa-heartbeat"></i> Sensors</div>
+            <div class="filter-chip" data-filter="power"><i class="fas fa-battery-full"></i> Power & Charging</div>
+            <div class="filter-chip" data-filter="connectivity"><i class="fas fa-broadcast-tower"></i> Connectivity</div>
+        </div>
+    </div>
+
+    <div class="components-grid" id="componentsGrid">
+        <!-- dynamic js will inject cards -->
+    </div>
+</div>
+
+<div class="footer">
+    <i class="fas fa-smartwatch"></i> Wearable Engineering Reference • Real-world component info for Apple Watch, Samsung Galaxy, Garmin & more.
+</div>
+
+<script>
+    // ------------- SMART WATCH COMPONENTS DATABASE ------------
+    const componentsData = [
+        { 
+            id: 1,
+            name: "System-on-Chip (SoC)", 
+            category: "core",
+            icon: "fa-microchip",
+            description: "Central computing unit combining CPU, GPU, and memory controller. Handles OS, app processing, and graphics.",
+            specs: ["Apple S9 / Snapdragon W5+", "Dual-core ARM Cortex", "3D GPU acceleration", "12nm - 4nm process"],
+            details: { "Clockspeed": "1.8-2.0 GHz", "Co-processor": "Always-on sensor hub", "RAM interface": "LPDDR4X" }
+        },
+        { 
+            id: 2,
+            name: "RAM & Storage", 
+            category: "core",
+            icon: "fa-database",
+            description: "Temporary workspace and persistent flash memory for apps, music, and firmware.",
+            specs: ["1GB – 2GB LPDDR4X", "32GB – 64GB eMMC / eNAND", "Up to 1000 songs offline"],
+            details: { "Storage type": "eMMC 5.1 / UFS", "RAM speed": "2133 MT/s", "Wear-leveling": "yes" }
+        },
+        { 
+            id: 3,
+            name: "AMOLED Display", 
+            category: "display",
+            icon: "fa-tv",
+            description: "Vibrant always-on panel with deep blacks, high brightness for outdoor visibility.",
+            specs: ["1.2” – 1.9” round/rect", "Always-on mode (1Hz refresh)", "1000+ nits peak", "Sapphire/Glass lens"],
+            details: { "Resolution": "466x466 / 480x480", "Pixel density": "326-460 PPI", "Touch sampling": "120Hz" }
+        },
+        { 
+            id: 4,
+            name: "Haptic Engine & Crown", 
+            category: "display",
+            icon: "fa-hand-peace",
+            description: "Tactile feedback and precision navigation with digital crown / rotating bezel.",
+            specs: ["Linear Resonant Actuator (LRA)", "Optical encoder crown", "Custom vibration patterns"],
+            details: { "Force": "~1.2G peak", "Response": "<10ms", "Waterproof sealed": "IP6X" }
+        },
+        { 
+            id: 5,
+            name: "Optical HR & SpO₂ Sensor", 
+            category: "sensors",
+            icon: "fa-heartbeat",
+            description: "PPG sensor array with green, red, and infrared LEDs for heart rate, blood oxygen, and stress.",
+            specs: ["8x photodiodes", "Green/Red/IR wavelengths", "PPG sampling up to 256Hz"],
+            details: { "Accuracy": "±2 bpm (typical)", "SpO₂ range": "70-100%", "LED driver": "Integrated AFE" }
+        },
+        { 
+            id: 6,
+            name: "ECG / Electrical Sensor", 
+            category: "sensors",
+            icon: "fa-chart-line",
+            description: "Medical-grade single-lead ECG for atrial fibrillation detection. Titanium/ceramic electrodes.",
+            specs: ["30 sec reading", "Lead I configuration", "FDA/CE certified"],
+            details: { "Sampling rate": "500 Hz", "Dynamic range": "±10mV", "Isolation": "Class II" }
+        },
+        { 
+            id: 7,
+            name: "IMU (Accel+Gyro+Baro)", 
+            category: "sensors",
+            icon: "fa-charging-station",
+            description: "Motion tracking, fall detection, altitude monitoring. 6-axis + barometric altimeter.",
+            specs: ["±16g accelerometer", "±2000°/s gyro", "Barometer: 300-1100 hPa"],
+            details: { "Sensor fusion": "Android Sensor Hub", "Step detection": "low-power", "Water pressure": "10ATM" }
+        },
+        { 
+            id: 8,
+            name: "Skin Temperature & ALS", 
+            category: "sensors",
+            icon: "fa-thermometer-half",
+            description: "NTC thermistor for wrist temp tracking (ovulation/wellness) & ambient light for auto-brightness.",
+            specs: ["±0.1°C accuracy", "Under-display ALS", "Temperature baseline trends"],
+            details: { "Sampling": "1/min", "ALS range": "0.01 - 65k lux", "IR cut filter": "integrated" }
+        },
+        { 
+            id: 9,
+            name: "Li-Po Battery", 
+            category: "power",
+            icon: "fa-battery-full",
+            description: "High density curved cell, 1–3 day smartwatch mode, 20+ days battery saver.",
+            specs: ["300mAh – 600mAh", "3.85V nominal", "5V wireless charging", "800 cycles"],
+            details: { "Energy density": "~650 Wh/L", "Fast charge": "0-50% in 30min", "protection": "PCM" }
+        },
+        { 
+            id: 10,
+            name: "Wireless Charging Module", 
+            category: "power",
+            icon: "fa-charging-station",
+            description: "Qi-compatible or proprietary magnetic charging coil with reverse charging support.",
+            specs: ["2W – 5W charging", "WPC 1.2.4 standard", "Magnet array alignment"],
+            details: { "Efficiency": "~72%", "Coil type": "Multi-strand litz", "Thermal throttling": "45°C" }
+        },
+        { 
+            id: 11,
+            name: "Multi-band GPS + GLONASS", 
+            category: "connectivity",
+            icon: "fa-satellite-dish",
+            description: "Dual-frequency (L1+L5) for sub-meter accuracy, route tracking, offline maps.",
+            specs: ["A-GPS / Galileo / Beidou", "Cold start < 30s", "Position update 1Hz-10Hz"],
+            details: { "Tracking sensitivity": "-167 dBm", "Low power mode": "continuous", "Antenna": "patch/LNA" }
+        },
+        { 
+            id: 12,
+            name: "Bluetooth 5.3 + Wi-Fi + NFC", 
+            category: "connectivity",
+            icon: "fa-bluetooth",
+            description: "Unified connectivity: calls, audio streaming, payments, and fast syncing.",
+            specs: ["LE Audio ready", "NFC contactless payments", "2.4/5 GHz Wi-Fi"],
+            details: { "Bluetooth range": "~30m", "NFC type": "Type A/B", "Wi-Fi throughput": "50 Mbps" }
+        }
+    ];
+
+    // Render function based on search & filter
+    let activeFilter = "all";
+    let searchTerm = "";
+
+    function filterComponents() {
+        return componentsData.filter(comp => {
+            // filter by category
+            if (activeFilter !== "all" && comp.category !== activeFilter) return false;
+            // search by name, description or specs and details
+            if (searchTerm !== "") {
+                const term = searchTerm.toLowerCase();
+                const nameMatch = comp.name.toLowerCase().includes(term);
+                const descMatch = comp.description.toLowerCase().includes(term);
+                const specsMatch = comp.specs.some(s => s.toLowerCase().includes(term));
+                const detailsMatch = Object.values(comp.details).some(v => v.toLowerCase().includes(term));
+                if (!nameMatch && !descMatch && !specsMatch && !detailsMatch) return false;
+            }
+            return true;
+        });
+    }
+
+    function renderGrid() {
+        const filtered = filterComponents();
+        const gridContainer = document.getElementById("componentsGrid");
+        
+        if (filtered.length === 0) {
+            gridContainer.innerHTML = `<div class="empty-msg"><i class="fas fa-microchip-slash"></i> No matching components found.<br>Try adjusting search or filters.</div>`;
+            return;
+        }
+
+        let cardsHTML = "";
+        filtered.forEach(comp => {
+            // build specs & details section
+            let specsHtml = `<div class="specs-list">`;
+            for (const [key, value] of Object.entries(comp.details)) {
+                specsHtml += `<p><span class="spec-label">${key}:</span> <span class="spec-value">${value}</span></p>`;
+            }
+            specsHtml += `</div>`;
+            // tags from specs array
+            let tagsHtml = `<div style="margin-top: 6px;">`;
+            comp.specs.forEach(tag => {
+                tagsHtml += `<span class="tech-tag">${tag}</span>`;
+            });
+            tagsHtml += `</div>`;
+
+            let categoryDisplay = "";
+            if(comp.category === "core") categoryDisplay = "Core & Memory";
+            else if(comp.category === "display") categoryDisplay = "Display & Input";
+            else if(comp.category === "sensors") categoryDisplay = "Biometric Sensors";
+            else if(comp.category === "power") categoryDisplay = "Power";
+            else categoryDisplay = "Connectivity";
+
+            cardsHTML += `
+                <div class="component-card">
+                    <div class="card-header">
+                        <div class="component-icon"><i class="fas ${comp.icon}"></i></div>
+                        <div class="component-category">${categoryDisplay}</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="component-name">${comp.name}</div>
+                        <div class="component-desc">${comp.description}</div>
+                        ${specsHtml}
+                        ${tagsHtml}
+                    </div>
+                    <div class="card-footer">
+                        <span><i class="fas fa-cogs"></i> integrated module</span>
+                        <span class="badge"><i class="fas fa-search"></i> wear-grade</span>
+                    </div>
+                </div>
+            `;
+        });
+        gridContainer.innerHTML = cardsHTML;
+    }
+
+    // Event listeners
+    document.getElementById("searchInput").addEventListener("input", (e) => {
+        searchTerm = e.target.value;
+        renderGrid();
+    });
+
+    // filter chips
+    const chips = document.querySelectorAll(".filter-chip");
+    chips.forEach(chip => {
+        chip.addEventListener("click", () => {
+            chips.forEach(c => c.classList.remove("active"));
+            chip.classList.add("active");
+            activeFilter = chip.getAttribute("data-filter");
+            renderGrid();
+        });
+    });
+
+    // initial render
+    renderGrid();
+</script>
+</body>
+</html>
