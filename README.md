@@ -8,6 +8,8 @@
 
 > **An interactive reference website detailing every critical component inside modern smartwatches** — from SoCs and sensors to batteries and connectivity modules.
 
+<img width="1884" height="3099" alt="image" src="https://github.com/user-attachments/assets/f9fae0eb-3642-42b1-bd30-8d924b22ceb1" />
+
 ---
 
 ##  Table of Contents
