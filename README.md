@@ -8,8 +8,6 @@
 
 > **An interactive reference website detailing every critical component inside modern smartwatches** — from SoCs and sensors to batteries and connectivity modules.
 
-🔗 **Live Demo:** [View the Smart Watch Component Atlas](#) *(replace with your GitHub Pages or hosting link)*
-
 ---
 
 ##  Table of Contents
