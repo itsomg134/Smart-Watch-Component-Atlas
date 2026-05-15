@@ -233,8 +233,3 @@ You are free to use, modify, and distribute this project for personal or commerc
 
 ---
 
-##  Contact
-
-**Your Name** – [@yourtwitter](https://twitter.com/yourtwitter) – email@example.com  
-
-Project Link: [https://github.com/yourusername/smartwatch-component-atlas](https://github.com/yourusername/smartwatch-component-atlas)
