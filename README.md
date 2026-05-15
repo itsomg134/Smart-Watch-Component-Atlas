@@ -56,7 +56,7 @@ Each component is displayed on an interactive card with technical details, tags,
 
 ---
 
-## 🗂️ Component Database
+##  Component Database
 
 The website currently includes these **12 hand‑curated components**:
 
@@ -79,7 +79,7 @@ The website currently includes these **12 hand‑curated components**:
 
 ---
 
-## 🖼️ Screenshots
+##  Screenshots
 
 > *(Replace these placeholders with actual screenshots of your website)*
 
@@ -90,7 +90,7 @@ The website currently includes these **12 hand‑curated components**:
 
 ---
 
-## 🚀 Getting Started
+##  Getting Started
 
 You can run this project locally in **two clicks** — no server required.
 
@@ -118,7 +118,7 @@ No build tools, no `npm install` — just pure web standards.
 
 ---
 
-## 💡 Usage
+##  Usage
 
 ### Searching
 - Type any keyword into the **search bar** (e.g., "gyroscope", "LPDDR", "waterproof").
@@ -138,7 +138,7 @@ No build tools, no `npm install` — just pure web standards.
 
 ---
 
-## 🛠️ Customization
+##  Customization
 
 ### Adding a New Component
 Open `index.html` and locate the `componentsData` array (inside the `<script>` tag). Add a new object:
@@ -175,7 +175,7 @@ The component database is plain JavaScript — you can easily copy it to a JSON 
 
 ---
 
-## 🧰 Technologies Used
+##  Technologies Used
 
 - **HTML5** – Semantic structure, responsive meta tags
 - **CSS3** – Flexbox, Grid, custom properties, modern transitions
@@ -187,7 +187,7 @@ No frameworks, no external libraries except icons and fonts.
 
 ---
 
-## 🗺️ Roadmap
+##  Roadmap
 
 - [ ] Add dark/light theme toggle  
 - [ ] "Compare Components" table (select 2‑3 cards side‑by‑side)  
@@ -196,11 +196,10 @@ No frameworks, no external libraries except icons and fonts.
 - [ ] Expand database: microphone, speaker, eSIM module, waterproofing gaskets  
 - [ ] Interactive quiz: "Guess the component"  
 
-*Have a suggestion? Open an issue or start a discussion!*
 
 ---
 
-## 🤝 Contributing
+##  Contributing
 
 Contributions are what make the open source community amazing. Any contributions you make are **greatly appreciated**.
 
@@ -217,7 +216,7 @@ Please ensure your code follows the existing style (clean HTML/CSS/JS, no extern
 
 ---
 
-## 📄 License
+##  License
 
 Distributed under the **MIT License**. See `LICENSE` file for more information.
 
@@ -225,7 +224,7 @@ You are free to use, modify, and distribute this project for personal or commerc
 
 ---
 
-## 🙏 Acknowledgments
+##  Acknowledgments
 
 - **Font Awesome** for the beautiful icon set  
 - **Google Fonts** for the Inter typeface  
@@ -234,7 +233,7 @@ You are free to use, modify, and distribute this project for personal or commerc
 
 ---
 
-## 📬 Contact
+##  Contact
 
 **Your Name** – [@yourtwitter](https://twitter.com/yourtwitter) – email@example.com  
 
