@@ -79,17 +79,6 @@ The website currently includes these **12 hand‑curated components**:
 
 ---
 
-##  Screenshots
-
-> *(Replace these placeholders with actual screenshots of your website)*
-
-| Desktop View | Mobile View |
-|--------------|--------------|
-| ![Desktop Screenshot](https://via.placeholder.com/800x450?text=Desktop+View+of+Component+Grid) | ![Mobile Screenshot](https://via.placeholder.com/300x500?text=Mobile+View) |
-| *Filter chips + search bar* | *Responsive cards stack vertically* |
-
----
-
 ##  Getting Started
 
 You can run this project locally in **two clicks** — no server required.
